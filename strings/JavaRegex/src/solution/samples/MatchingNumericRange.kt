@@ -1,4 +1,4 @@
-package solution
+package solution.samples
 
 /**
  * https://www.regular-expressions.info/numericranges.html

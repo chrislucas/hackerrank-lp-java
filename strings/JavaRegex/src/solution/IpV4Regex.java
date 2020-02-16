@@ -1,9 +1,9 @@
 package solution;
 
 // https://www.hackerrank.com/challenges/java-regex/problem
-public class Main {
+public class IpV4Regex {
 
-    public static final String IP_PATTERN = "";
+    public static final String IPv4_PATTERN = "";
 
     public static void main(String[] args) {
 
