@@ -1,0 +1,55 @@
+Analisando o comportamento do motor de regex com um exemplo pratico
+
+- Os quantificadores +, * e {} sao "greedy"
+
+  RE = <.+>
+  String = <EM>first</EM> test
+
+  Objetivo inicial: Escrever uma regex que corresponda com tags HTML
+  Resultado: A regex definida acima corresponde com mais do que as tags
+
+  Analisando a busca feita pelo motor de regex
+
+  1) primeiro token da regex eh "<" e corresponde com o primeiro caracter
+  da string, o motor avanca
+
+  2) o proximo token da regex eh o "." que corresponde a qualquer caracter (exceto \n).
+  apos o . temos o + que indica uma correspondencia com 1 ou + caracteres diferente de \n. Como o + eh greedy
+  o motor de regex ira procurar correspondencia com o . ate falha.
+
+  O . ponto encontra correspondencia no caracter "E" o motor avanca para o proximo caracter "M" onde o ponto
+  tbm corresponde. O proximo caracter eh o ">"
+
+  3) O . corresponde com ">" e o motor prossegue por toda a cadeia de caracter ate encontrar o fim da cadeia
+  (vazio ou fim da string). O problema esta em q o operador dot(.) corresponde com tudo, fazendo com que o motor de regex
+  avance e corresponda com mais conteudo do que queriamos
+
+  4) Apos encontrar o fim da string o motor RE passa para o proximo token da REGE, ">"
+
+  5) Ate aqui, o motor RE usou "<.+" que correspondeu com "<EM>first</EM> test", agora o motor esta apontando
+  para ">" que nao corresponde com nada. Mas o motor lembra dessa parte da regex .+, e ao invez de admitir que
+  a regex falhou ele retrocede um caracter da String analizando o ultimo caracter da cadeia, de tras pra frente (t).
+
+  6) o ultimo token da regex ainda eh ">", que nao corresponde com "t", fazendo com que o motor RE retroceda mais um
+  caracter, o "s". Essa estrategia segue até encontrar o caracter ">" da substring "</EM>".
+
+  7) Quando o ultimo token ">" da regex correspondeo com o caracter ">" da string  o motor RE retorna que "<EM>first</EM>"
+  correspondeu com a regex
+
+  O ponto mais importante dessa analise eh sobre o comportamento da combinacao .+. Quando o mecanismo de regex chegou
+  nessa combinacao de metachar com o quantificador que eh "guloso" o metachar DOT fez o mecanismo achar correspondencia
+  com todos os caracteres ate o fim da string, e quando o mecanismo nao achou mais correspondencia nao falhou porque
+  ainda existia o quantificador + que fez o mecanismo dar um passo para tras na cadeia de caracteres (backtracking)
+  e avancar na regex (">").
+
+  Comecou-se entao uma busca recursiva, voltando de tras pra frente buscando um caracter que
+  correspondesse com ">", assim o resultado final foi uma correspondencia com  "<EM>first</EM>"
+
+
+  Eh importante entender que o motor de regex tenta encontrar correspondencia o mais cedo possivel, ao primeiro
+  resultado de sucesso que esse mecanismo encontrar ele encerra a busca sem tentar aplicar backtracking para encontrar
+  outra possivel correspondencia. Por conta dessa caracteristicas os resultados encontrados pelo mecanismo sao ditos os
+  ^as correspondencias mais longas possiveis a partir da esquerda^
+
+
+  PODEMOS ATRASAR ESSE MECANISMO DE BUSCA, TORNANDO-O MAIS "LAZINESS OU PREGUICOSO" (Laziness Instead of Greediness)

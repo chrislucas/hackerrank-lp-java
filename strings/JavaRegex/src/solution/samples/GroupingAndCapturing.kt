@@ -29,46 +29,39 @@ fun testGroupingAndCapturing1() {
      * dentro do grupo sejam armazenados para uso posterior por exemplo quando
      * usamos backreference ()
      *
+     * POdemos otimizar a nossa regex para o motor de regex ser mais eficiente
+     * caso nao precisemos do padrao capturado pelo grupo usando a sintaxe
+     * "?:" apos o primeiro parenteses chamado de non-grouping capture
+     *
+     * O operador ?: nao tem relacao com ? no final de uma regex ou parte
+     * dela. Um indica que o grupo nao sera utilizado para captura na correspondencia
+     * de um padrao e o outro um quantificador (0 ou 1 ocorrencia de um padrao = {0.1})
      * */
 
     val imageExtensions = Regex("\\w+\\.(?:png|jpg|jpeg|bmp)")
     arrayOf("teste.png", "teste.pig","teste.bmp", "teste123.jpeg").forEach {
-        it.logMatch(imageExtensions)
+        it.printMatch(imageExtensions)
     }
 }
 
-
-/**
- * https://kotlinlang.org/docs/reference/functions.html#infix-notation
- * Regras para infix notation
- *  - funcoes infix devem ser member functions ou extension function
- *  - devem conter um unico parametro
- *  - o parametro dessa funcao nao deve ser um 'variable number of args' (varargs)
- * */
-infix fun String.match(regex: Regex) = this.matches(regex)
-
-fun String.logMatch(regex: Regex) =
-    println(String.format("%s %s with: %s"
-        , this
-        , if (this match regex) "matches" else "not matches"
-        , regex.toString()))
-
 fun testGroupingAndCapturing2() {
-    val regex = Regex("Set(?:Value)?")
-    arrayOf("SetValue", "Set").forEach {
-       it.logMatch(regex)
-    }
+    val regex1 = Regex("Set(?:Value)?")
+    arrayOf("SetValue", "Set") exec { it.printMatch(regex1) }
+
     println()
     // \s = [ \t\n\r\f\v]
-    val regex1 = Regex("express(?:ão|ões)\\sregular(?:es)?")
+    val regex2= Regex("express(?:ão|ões)\\sregular(?:es)?")
     arrayOf("expressão regular"
         , "expressões regulares"
         , "expressão\nregular"
         , "expressões\nregulares"
-        ,  "expressões\tregulares").forEach {
-       it.logMatch(regex1)
+        ,  "expressões\tregulares").exec {
+       it.printMatch(regex2)
     }
 
+    println()
+    val regex3 = Regex("color=(?:red|green|blue)")
+    arrayOf("color=red", "color=yellow", "color=blue", "color=purple") exec { it.printMatch(regex3) }
 }
 
 fun main() {
