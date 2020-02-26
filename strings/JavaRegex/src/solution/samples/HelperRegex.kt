@@ -18,4 +18,7 @@ infix fun String.printMatch(regex: Regex) =
         , if (this match regex) "matches" else "not matches"
         , regex.toString()))
 
+infix fun String.printMatch(regex: Array<Regex>) = regex.forEach { this.printMatch(it) }
+
+
 inline infix fun <T> Array<T>.exec(fn: (value: T) -> Unit) = this.forEach { fn(it) }

@@ -53,3 +53,18 @@ Analisando o comportamento do motor de regex com um exemplo pratico
 
 
   PODEMOS ATRASAR ESSE MECANISMO DE BUSCA, TORNANDO-O MAIS "LAZINESS OU PREGUICOSO" (Laziness Instead of Greediness)
+  RE = <.+?>
+  String = <EM>first</EM> test
+  1) o mecanismo aponta para o token "<" da regex e o primeiro caracter da string eh "<", achando correspondencia
+  assim avanca para o proximo token .+
+
+  2) O proximo caracter eh "E" que corresponde com o token ., Dessa vez o token "." esta acompanahdo de +?
+  que faz com que o mecanismo repita-o o menos possivel, 1x no caso. O mecanismo encontrando correspondencia
+  cumpre o seu comportamento e passa para o proximo token da regex, ">" e para o proximo caracter "M"
+
+  3) ">" nao corresponde com "M", o mecanismo volta um token, ".+",  mas ao inves de voltar um caracter da string
+  (backtracking) ele avanca por conta do operador "?" e entao com .+ encontra correspondencia em "EN", avancando
+  com o proximo token da regex, ">" e o proximo caracter da string ">"
+
+  4) O mecanismo encontra correspondencia entre o token e o caracter e encerra a busca pois encontra um
+  resultado que corresponde a padrao procurado "<EN>"

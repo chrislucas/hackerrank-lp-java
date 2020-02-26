@@ -1,1 +1,57 @@
 https://www.regular-expressions.info/numericranges.html
+
+https://www.regular-expressions.info/engine.html
+Como um mecanismo de regex funciona e os tipos de mecanismos existentes
+text-directed engines e regex-directed engines
+
+ER = expressao regular
+# https://www.regular-expressions.info/quickstart.html
+TOKEN = (caracteres com siginificados bem definidos numa regex)
+metacaracter, grupos/conjuntos de caracteres, quantificadores, caracteres
+especiais e literais
+
+RegexDirectedEngines
+
+Quase todos os mecanismos de regex modernos sao baseados no mecanismo
+regex-directed-engine. Isso pq certas ferramentas uteis como lazy_quantifiers
+e backreferences so podem ser implementadas com esse tipo de mecanismo.
+
+O mecanismo regex-directed-engine atravessa a "string-regex"
+tentar encontrar corresponencia entre um token e um caracter do "texto-alvo". Quando
+encontra uma correspondencia entre o TOKEN e o caracter o mecanismo avanca
+para a proximo token da ER e o proximo caracter da string, se o TOKEN falha
+o mecanismo retornar (backtracking) ao token anterior na regex e no caracterer
+da string para tentar novamente uma outra possibilidade de correspondencia
+entre no novo token e caracter da string.
+
+TextDirectedEngines
+
+
+A text-directed-engine passa pelos caracteres de uma string e testa todas as permutacoes
+de TOKEN da regex ate encontrar correspondencia ou falhar. O mecanismo so avanca para o proximo
+caracter se encontrar correspondencia entre TOKEN e caracter, e nunca realiza backtracking (retornar
+um token e um caracter para tentar outra combinacao e achar correspondencia).
+
+Na maioria dos casos os 2 mecanismos chegam ao mesmo resultado. A um caso em especifico, quando
+usamos o TOKEN de ALTERNATION (|) com 2 alternativas que podem corresponder a mesma posicao de um
+caracter na string
+
+"Regex engine always return the leftmost match"
+
+O mecanismo de regex foi projetado para avaliar o texto da esquerda para direita, assim
+sendo ele sempre retornara um resultado de correspondencia o "mais a esquerda" possível
+pq ao encontrar o padrao o mecanismo para de buscar, mesmo que exista um resultado melhor
+se o mecanismo continua-se a procurar, indo para os caracteres mais a direita do "texto-alvo"
+
+Exemplo
+regex: cat
+texto-alvo: He captured a catfish for his cat
+
+o mecanismo ira encontrar uma correspondencia a partir do decimo quinto caracter
+na palavra "catfish", pois foi projetado para retornar assim que encontrar a primeira
+correspondencia possivel. Uma vez encontrado um texto que corresponde ao padrao encontrado
+o mecanismo se incerra, e nao vai encontrar nesse exemplo a palavra cat no final da string.
+
+No exemplo acima, a regex funciona como um simples mecanismo de pesquisa de string, e esse
+comportamento eh muito importante de se conhecer afim de construir regex que se comportem
+examente como queremos.

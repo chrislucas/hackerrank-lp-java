@@ -37,10 +37,13 @@ fun testGreedinessOperator() {
         , "<em>teste</teste>"
         , "um teste<b>teste</b>maroto"
     , "<b>"
+    , "<h1>"
+    , "</h1>"
     ,"</b>") exec {
         it printMatch Regex("<.+>") // greediness
-        it printMatch Regex("<.?>") // laziness
-        it printMatch Regex("<[a-zA-Z]+>")
+        it printMatch Regex("<.+?>") // laziness
+        it printMatch Regex("<[^>]+>") // negate >
+        it printMatch Regex("</?[a-zA-Z]+[0-9]?>")
     }
 }
 
