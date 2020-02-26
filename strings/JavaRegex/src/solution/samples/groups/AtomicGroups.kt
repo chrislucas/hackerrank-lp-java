@@ -1,5 +1,6 @@
 package solution.samples.groups
 
+import solution.samples.match
 import solution.samples.printMatch
 
 /**
@@ -69,9 +70,46 @@ fun testBehaviorBetweenCapturingAndNonCapturingGroup() {
         , Regex("a(?>b|bc)c")   // atomic non-capturing group
     )
     listOf("abc", "abcc").forEach { it printMatch args }
+}
 
+fun optimizationAtomicGroup() {
+    /**
+     * Exemplo abaixo mostra como o mecanismo da RE para captura de grupos
+     * pode ser otimizado, quando sabemos o que estamos procurando
+     * */
+
+    // not matching
+    "integers" printMatch "\\b(integer|insert|in)\\b".toRegex()
+    // matching
+    "integers" printMatch "\\b(?>integer|insert|in)\\b".toRegex()
+    // matching
+    "integers" printMatch "\\b(integer|insert|in)s\\b".toRegex()
+    // matching
+    "integers" printMatch "\\b(?>integer|insert|in)s\\b".toRegex()
+    // ?
+    "integers" printMatch "\\b(?>insert|integer|in)s\\b".toRegex()
+    // ? matching
+    "integers" printMatch "\\b(?>insert|integer)s\\b".toRegex()
+    // matching - O mecanismo ao falhar por completo ao tentar corresponder o TOKEN com caracter(es) da string
+    // tebta o proximo token do grupo
+    "integers" printMatch "\\b(?>ins|integer)s\\b".toRegex()
+    // ? not matching
+    "integers" printMatch "\\b(?>in|integer)s\\b".toRegex()
+    // ??
+    "integers" printMatch "\\b(?>insert|in|integer)s\\b".toRegex()
+    //
+    "integers" printMatch "\\b(?>in|insert|integer)s\\b".toRegex()
+    // matching
+    "integers" printMatch "\\b(?>ins|insert|integer)s\\b".toRegex()
+    // matching
+    "insert" printMatch "\\b(?>integer|insert|in)\\b".toRegex()
+    // not-matching porque o mecanismo encontra correspondencia na alternativa "in"
+    // encerra a busca no grupo passa para p proximo TOKEN \\b e falha ao tentar
+    "insert" printMatch "\\b(?>integer|in|insert)\\b".toRegex()
+    // IDEM
+    "insert" printMatch "\\b(?>in|insert)\\b".toRegex()
 }
 
 fun main() {
-    testBehaviorBetweenCapturingAndNonCapturingGroup()
+    optimizationAtomicGroup()
 }
