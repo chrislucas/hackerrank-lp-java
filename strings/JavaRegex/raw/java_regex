@@ -1,0 +1,35 @@
+http://tutorials.jenkov.com/java-regex/index.html#regular-expressions
+
+The core REGEX Java API
+
+RE - Regular Expression(s)?
+
+Pattern (java.util.regex.Pattern) - http://tutorials.jenkov.com/java-regex/pattern.html
+
+The pattern class is used to create patterns (RE). A pattern is precompiled regular expression
+object (as a Pattern instance), capable of matching itself against a text.
+
+Matcher (java.util.regex.Matcher) - http://tutorials.jenkov.com/java-regex/matcher.html
+
+Java replace, replaceAll, replaceFirst
+
+replace = Substitui todas as ocorrencias de caracteres ou ocorrencias de substring de uma string. (REGEX nao sao intepretadas
+para como tal para uso na executa das substituicoes)
+
+replaceAll = substitui todas as ocorrencias de substring de uma string e permite formatar uma string utilizando
+uma REGEX para identificar um padrao na string e um FORMATO para converter a string original numa nova string FORMATADA.
+
+
+https://www.baeldung.com/java-regex-performance
+Beneficios de ter uma RE precompilada:
+
+ First of, reuses inevitable brins performance gain.
+
+https://www.baeldung.com/java-regex-pre-compile
+
+Grouping
+https://www.logicbig.com/tutorials/core-java-tutorial/java-regular-expressions/named-captruing-groups.html
+
+Bug encontrado desde java 1.4 na  lib de REGEX
+https://bugs.java.com/bugdatabase/view_bug.do?bug_id=5050507
+No texto encontra-se a seguinte dica: Evite usar "alternation" (|) sempre que possivel , pois sao ineficientes
