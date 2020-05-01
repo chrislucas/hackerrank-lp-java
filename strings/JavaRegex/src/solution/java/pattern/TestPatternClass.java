@@ -8,16 +8,16 @@ public class TestPatternClass {
 
     private static final Pattern PATTERN_EVEN_NUMBER = Pattern.compile(EVEN_NUMBER);
 
-    private static final String FORMATTED_PATTERN_NUMBER = "^(\\d)(\\d{1,3})*$";
+    private static final String FORMATTED_PATTERN_NUMBER = "^(\\d{1,3})(\\d{1,3})*$";
 
     private static void testPatternEvenNumber() {
-        for (int i = 1000; i < 2000; i++) {
+        for (int i = 900; i < 10001; i++) {
             String valueOf = String.valueOf(i);
             boolean nonFormattedNumber = PATTERN_EVEN_NUMBER.matcher(valueOf).matches();
             String formattedValueOf = valueOf.replaceAll(FORMATTED_PATTERN_NUMBER, "$1.$2");
             boolean formattedNumber = PATTERN_EVEN_NUMBER.matcher(formattedValueOf).matches();
 
-            System.out.printf("%s - %s = %s - %s\r\n",
+            System.out.printf("N_FORMATTED: %s - %s; FORMATTED: %s - %s\r\n",
                     valueOf
                     , nonFormattedNumber ? "Match" : "does not match"
                     , formattedValueOf
