@@ -29,3 +29,6 @@ _
 /src/solution/java/pattern/TestPatternClass.java,9\b\9b9e03c7c37ac3c033470cd16ddd6c3b43f41459
 _
 /src/solution/java/pattern/TestWordBoundary.java,2\3\23d3d30e215f6fea7801ceed48fa07558ddc9ce3
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
