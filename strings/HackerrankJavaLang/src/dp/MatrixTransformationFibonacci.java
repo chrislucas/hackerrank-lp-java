@@ -9,6 +9,7 @@ import java.math.BigInteger;
  * http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html
  * https://medium.com/@hhccvvmm/dynamic-programming-vs-transformation-matrix-in-linear-recurrence-problems-f2067fd58230
  * https://www.dcode.fr/fibonacci-numbers
+ *
  * Podemos expressar a recorrencia Linear f(n) = f(n-1) + f(n-2) na tramsfoprmacao matricial abaixo
  *
  * f(n) = T ^ (n-1) * F
@@ -21,7 +22,7 @@ import java.math.BigInteger;
  * Os valores da matriz F sao: {f(1) ... f(k)}
  *
  * A matriz T eh preenchida da seguinte forma
- * Ela eh quase toda preenchida de zeros, exceto na i-esima coluna da respectiva linha
+ * Ela eh quase toda preenchida de zeros, exceto na (i+1)-esima coluna da respectiva linha
  * onde adicionamos 1, e a ~ultima linha eh preenchida com os coeficientes dos termos de recorrencia
  *
  * a reccorencia de exemplo eh f(n) = f(n-1) + f(n-2) ou 1f(n-1)+1f(n-2)
@@ -37,7 +38,7 @@ import java.math.BigInteger;
  * exponentiation by squaring para acelerar o process
  *
  */
-public class MatrixLinearRec {
+public class MatrixTransformationFibonacci {
 
     private static BigInteger fibonacci(long nth) {
         if (nth == 0) {
@@ -130,7 +131,7 @@ public class MatrixLinearRec {
         System.out.printf("%d: digitos - %d\n", i, length);
     }
 
-    private static final long LIMIT = 100000L;
+    private static final long LIMIT = 50000L;
 
     private static void test() {
         long end = new TemplatePerformanceAlgorithm() {
