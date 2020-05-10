@@ -1,6 +1,7 @@
 package strings;
 
 import java.io.*;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 public class IO {
@@ -23,6 +24,10 @@ public class IO {
             numbers[i] = Integer.parseInt(tk.nextToken());
         }
         return numbers;
+    }
+
+    private  static String[] readTokens(String delimiter) throws IOException {
+        return reader.readLine().split(delimiter);
     }
 
     private static int[] readInts2(String delimiter) throws IOException {
