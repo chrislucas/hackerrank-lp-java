@@ -23,7 +23,7 @@ import java.math.BigInteger;
  *
  * A matriz T eh preenchida da seguinte forma
  * Ela eh quase toda preenchida de zeros, exceto na (i+1)-esima coluna da respectiva linha
- * onde adicionamos 1, e a ~ultima linha eh preenchida com os coeficientes dos termos de recorrencia
+ * onde adicionamos 1, e a ultima linha eh preenchida com os coeficientes dos termos de recorrencia
  *
  * a reccorencia de exemplo eh f(n) = f(n-1) + f(n-2) ou 1f(n-1)+1f(n-2)
  *
